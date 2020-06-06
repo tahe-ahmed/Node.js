@@ -19,7 +19,6 @@ app.get('/blogs/:title', (req, res) => {
     const title = req.params.title;
     if (fs.existsSync(title)) { 
         res.sendFile(path.join(__dirname, title));
-        res.end('ok');
     } else {
       res.status(400).end('This blog does not exit. ');
     }
@@ -27,18 +26,14 @@ app.get('/blogs/:title', (req, res) => {
 
 // create blogs
 app.post('/blogs', (req, res) => {
-    // How to get the title and content from the request??
-    const title = req.body.title;
-    const content = req.body.content;
+    const {title, content} = req.body;
     fs.writeFileSync(title, content);
-    // res.json({"title": title, "content": content});
     res.end('A new blog was created')
 })
 
 // updating blogs
 app.put('/blogs', (req, res) => {
-    const title = req.body.title;
-    const content = req.body.content;
+    const {title, content} = req.body;
     if(fs.existsSync(title)) { 
       fs.writeFileSync(title, content);
       res.end('ok')
