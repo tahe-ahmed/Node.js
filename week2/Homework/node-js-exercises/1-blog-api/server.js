@@ -35,7 +35,7 @@ app.post('/blogs', (req, res) => {
     res.end('A new blog was created')
 })
 
-// undating blogs
+// updating blogs
 app.put('/blogs', (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
