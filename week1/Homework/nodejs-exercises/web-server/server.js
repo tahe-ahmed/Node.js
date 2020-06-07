@@ -4,31 +4,23 @@ const path = require('path');
 
 //create a server
 let server = http.createServer(function (req, res) {
+	let contentType, fileType;
 
 	if (req.url === '/'){
-        res.setHeader('Content-Type', 'text/html');
-        fs.readFile(path.join(__dirname,'index.html'), (err, content) => {
-            res.writeHead(200)
-            res.write(content);
-            res.end()
-        })
-    } 
-    if (req.url === '/script.js') {
-        res.setHeader('Content-Type', 'text/javascript');
-        fs.readFile(path.join(__dirname,'script.js'), (err, content) => {
-        res.writeHead(200)
-        res.write(content);
-        res.end()
-        })
-    }
-    if (req.url === '/style.css') {
-        res.setHeader('Content-Type', 'text/css');
-        fs.readFile(path.join(__dirname,'style.css'), (err, content) => {
-        res.writeHead(200)
-        res.write(content);
-        res.end()
-        })
-    }
+        	contentType = 'text/html', fileType ='index.html';
+    	} 
+    	if (req.url === '/script.js') {
+		contentType = 'text/javascript', fileType ='script.js';
+    	}
+    	if (req.url === '/style.css') {
+		contentType = 'text/css', fileType ='style.css';
+    	}
+    	res.writeHead(200, { 'Content-Type': contentType });
+		fs.readFile(path.join(__dirname, fileType), (err, content) => {
+	  	res.writeHead(200)
+	    	res.write(content);
+	   	res.end()
+    	})
 
 });
 const PORT = process.env.PORT || 3000
